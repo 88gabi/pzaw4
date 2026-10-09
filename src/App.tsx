@@ -1,32 +1,21 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+function Film({nazwa,rok,zdjecie}:Props){
+ const kto="lllo"
+  return (<div><img src={zdjecie}></img><p>{rok}<br/>{nazwa}</p></div>
+  );
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div>
-          <h1>Get started</h1>
-          <p>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <section id="spacer"></section>
-    </>
-  )
+  
+}
+function App(){
+  return (<body>
+  < Film nazwa="Zmierzch1" rok="2001" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
+    < Film nazwa="Zmierzch2" rok="2002" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
+    < Film nazwa="Zmierzch3" rok="2003" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" /></body>
+  );
+}
+interface Props{
+  nazwa:string;
+  rok: string;
+  zdjecie:string;
 }
 
 export default App
