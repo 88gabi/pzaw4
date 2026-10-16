@@ -16,7 +16,7 @@ function Ksiazki({nazwa,rok,liczbaStron,okladka}:Ksiazki){
 function ListaUtworow({nazwa,czas}:Utwor){
   return(
   <tr>
-      <td>{nazwa}</td>
+      <td>{nazwa}|</td>
       <td>{czas}</td>
     </tr>);
 }
