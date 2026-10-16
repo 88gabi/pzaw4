@@ -1,9 +1,6 @@
 function Film({nazwa,rok,zdjecie}:Props){
- const kto="lllo"
-  return (<div><img src={zdjecie}></img><p>{rok}<br/>{nazwa}</p></div>
+  return (<div ><img src={zdjecie}></img><p>{rok}<br/>{nazwa}</p></div>
   );
-
-  
 }
 function App(){
   return (<body>
@@ -13,9 +10,12 @@ function App(){
   );
 }
 interface Props{
+  /**Nazwa filmu */
   nazwa:string;
+  /**Rok wydania */
   rok: string;
-  zdjecie:string;
+  /**Opcjonalny link do zdjęcia */
+  zdjecie?:string;
 }
 
 export default App
