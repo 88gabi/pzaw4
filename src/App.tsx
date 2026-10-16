@@ -13,16 +13,17 @@ function Ksiazki({nazwa,rok,liczbaStron,okladka}:Ksiazka){
 function App(){
   return (
   <body>
+    <h1>FILMY</h1>
     <div className="galeria">
       < Film nazwa="Zmierzch1" rok="2001" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
       < Film nazwa="Zmierzch2" rok="2002" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
       < Film nazwa="Zmierzch3" rok="2003" zdjecie="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
-    </div>
+    </div><h1>ALBUMY</h1>
     <div className="galeria">
       < Muzyka nazwaAlbumu="Album1" rok="2001"  nazwaZespolu="Zespol1" gatunek="rock" okladka="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
       < Muzyka nazwaAlbumu="Album2" rok="2002"  nazwaZespolu="Zespol2" gatunek="hip-hop" okladka="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
       < Muzyka nazwaAlbumu="Album3" rok="2003"  nazwaZespolu="Zespol3" gatunek="disco-polo" okladka="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
-    </div>
+    </div><h1>KSIAZKI</h1>
     <div className="galeria">
       < Ksiazki nazwa="ksiązka1" rok="2001" liczbaStron="123" okladka="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
       < Ksiazki nazwa="ksiązka2" rok="2002" liczbaStron="456" okladka="https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp" />
