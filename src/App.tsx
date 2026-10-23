@@ -54,7 +54,7 @@ function App() {
   );
   return (
     <body>
-      <h1 onClick={() => ustawFilmOtwarty(!czyFilmOtwarty)}>FILMY</h1>
+      <h1 onClick={() => ustawFilmOtwarty(!czyFilmOtwarty)}>FILMY {czyFilmOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
       {czyFilmOtwarty && (
         <div>
           <h2>WSZYSTKIE</h2>
@@ -68,7 +68,7 @@ function App() {
         </div>)}
 
 
-      <h1 onClick={() => ustawAlbumOtwarty(!czyAlbumOtwarty)}>ALBUMY</h1>
+      <h1 onClick={() => ustawAlbumOtwarty(!czyAlbumOtwarty)}>ALBUMY{czyAlbumOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
        {czyAlbumOtwarty && (
       <div>
         <h2>NAJWIEKSZA ILOSC UTWOROW</h2>
@@ -81,7 +81,7 @@ function App() {
         </div>
       </div>)}
 
-      <h1  onClick={() => ustawKsiazkiOtwarty(!czyKsiazkiOtwarty)}>KSIĄŻKI</h1>
+      <h1  onClick={() => ustawKsiazkiOtwarty(!czyKsiazkiOtwarty)}>KSIĄŻKI{czyKsiazkiOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
       {czyKsiazkiOtwarty && (<div>
         <h2>WSZYSTKIE </h2>
         <div className="galeria">
