@@ -1,18 +1,48 @@
 import { useState } from "react";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 function Film({ nazwa, rok, zdjecie, ocena }: Filmy) {
-  return (<div ><img src={zdjecie}></img><p>Tytuł: {nazwa}<br />Rok: {rok}<br />Ocena: {ocena}</p> {ocena >= 8 && <p>POLECANY</p>}</div>
+  return (
+    <div className="card text-bg-danger mb-3"><img className="card-img-top" src={zdjecie}></img>
+      <div className="card-body">
+        <h3 className="card-title" >Tytuł: {nazwa}</h3>
+        <p className="card-text">
+          Rok: {rok}<br />
+          Ocena: {ocena}<br />
+        </p>
+        {ocena >= 8 && <span className="card-footer text-body-secondary">POLECANY</span>}
+      </div>
+    </div>
   );
 }
 function Muzyka({ nazwaAlbumu, rok, nazwaZespolu, gatunek, okladka, listaUtworow }: Album) {
-  return (<div ><img src={okladka}></img><p>Nazwa albumu: {nazwaAlbumu}<br />Nazwa zespołu: {nazwaZespolu}<br />Rok: {rok}<br />Gatunek: {gatunek}</p>
-    {listaUtworow.length <= 0 && <p>BEZ UTWOROW</p>}
-    <p>{listaUtworow.map((o) => (<ListaUtworow nazwa={o.nazwa} czas={o.czas} />))}</p>
-  </div>
+  return (
+    <div className="card  text-bg-danger mb-3"><img className="card-img-top" src={okladka}></img>
+      <div className="card-body">
+        <h3 className="card-title" >Nazwa albumu: {nazwaAlbumu}</h3>
+        <p className="card-text">
+          Nazwa zespołu: {nazwaZespolu}<br />
+          Rok: {rok}<br />
+          Gatunek: {gatunek}<br />
+        </p>
+        {listaUtworow.length <= 0 && <span className="alert alert-secondary" role="alert">BEZ UTWORÓW</span>}
+        <span className="card-footer text-body-secondary" >
+          {listaUtworow.map((o) => (<ListaUtworow nazwa={o.nazwa} czas={o.czas} />))}
+        </span>
+      </div>
+    </div>
   );
 }
 function Ksiazki({ nazwa, rok, liczbaStron, okladka }: Ksiazki) {
-  return (<div><img src={okladka}></img><p>Tytuł: {nazwa}<br />Liczba stron: {liczbaStron}<br />Rok: {rok}</p>{rok <= 2000 && <p>KLASYKA</p>}</div>
+  return (
+    <div className="card  text-bg-danger mb-3">
+      <img className="card-img-top" src={okladka}></img>
+      <div className="card-body">
+        <h3 className="card-title">Tytuł: {nazwa}</h3>
+        Liczba stron: {liczbaStron}<br />
+        Rok: {rok} <br />
+        {rok <= 2000 && <span className="card-footer text-body-secondary" >KLASYKA</span>}
+      </div>
+    </div>
   );
 }
 function ListaUtworow({ nazwa, czas }: Utwor) {
@@ -53,42 +83,42 @@ function App() {
     (a, b) => b.listaUtworow.length - a.listaUtworow.length
   );
   return (
-    <body>
+    <body className="container">
       <h1 onClick={() => ustawFilmOtwarty(!czyFilmOtwarty)}>FILMY {czyFilmOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
       {czyFilmOtwarty && (
         <div>
           <h2>WSZYSTKIE</h2>
-          <div className="galeria" >
+          <div className="card-group">
             {filmy.map((o) => (<Film nazwa={o.nazwa} rok={o.rok} zdjecie={o.zdjecie} ocena={o.ocena} />))}
           </div>
           <h2>PO 2010</h2>
-          <div className="galeria">
+          <div className="card-group">
             {filmyPo2010.map((o) => (<Film nazwa={o.nazwa} rok={o.rok} zdjecie={o.zdjecie} ocena={o.ocena} />))}
           </div>
         </div>)}
 
 
       <h1 onClick={() => ustawAlbumOtwarty(!czyAlbumOtwarty)}>ALBUMY{czyAlbumOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
-       {czyAlbumOtwarty && (
-      <div>
-        <h2>NAJWIEKSZA ILOSC UTWOROW</h2>
-        <div className="galeria">
-          <Muzyka nazwaAlbumu={najwiekszaIloscUtworow[0].nazwaAlbumu} rok={najwiekszaIloscUtworow[0].rok} okladka={najwiekszaIloscUtworow[0].okladka} gatunek={najwiekszaIloscUtworow[0].gatunek} nazwaZespolu={najwiekszaIloscUtworow[0].nazwaZespolu} listaUtworow={najwiekszaIloscUtworow[0].listaUtworow} />
-        </div>
-      <h2>WSZYSTKIE </h2>
-        <div className="galeria">
-          {albumy.map((o) => (<Muzyka nazwaAlbumu={o.nazwaAlbumu} rok={o.rok} okladka={o.okladka} gatunek={o.gatunek} nazwaZespolu={o.nazwaZespolu} listaUtworow={o.listaUtworow} />))}
-        </div>
-      </div>)}
+      {czyAlbumOtwarty && (
+        <div>
+          <h2>NAJWIEKSZA ILOSC UTWOROW</h2>
+          <div className="card-group">
+            <Muzyka nazwaAlbumu={najwiekszaIloscUtworow[0].nazwaAlbumu} rok={najwiekszaIloscUtworow[0].rok} okladka={najwiekszaIloscUtworow[0].okladka} gatunek={najwiekszaIloscUtworow[0].gatunek} nazwaZespolu={najwiekszaIloscUtworow[0].nazwaZespolu} listaUtworow={najwiekszaIloscUtworow[0].listaUtworow} />
+          </div>
+          <h2>WSZYSTKIE </h2>
+          <div className="card-group">
+            {albumy.map((o) => (<Muzyka nazwaAlbumu={o.nazwaAlbumu} rok={o.rok} okladka={o.okladka} gatunek={o.gatunek} nazwaZespolu={o.nazwaZespolu} listaUtworow={o.listaUtworow} />))}
+          </div>
+        </div>)}
 
-      <h1  onClick={() => ustawKsiazkiOtwarty(!czyKsiazkiOtwarty)}>KSIĄŻKI{czyKsiazkiOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
+      <h1 onClick={() => ustawKsiazkiOtwarty(!czyKsiazkiOtwarty)}>KSIĄŻKI{czyKsiazkiOtwarty ? (<span>▾</span>) : (<span>▸</span>)}</h1>
       {czyKsiazkiOtwarty && (<div>
         <h2>WSZYSTKIE </h2>
-        <div className="galeria">
+        <div className="card-group">
           {ksiazki.map((o) => (<Ksiazki nazwa={o.nazwa} rok={o.rok} okladka={o.okladka} liczbaStron={o.liczbaStron} />))}
         </div>
         <h2>OD NAJNOWSZEJ</h2>
-        <div className="galeria">
+        <div className="card-group">
           {ksiazkiRokWydania.map((o) => (<Ksiazki nazwa={o.nazwa} rok={o.rok} okladka={o.okladka} liczbaStron={o.liczbaStron} />))}
         </div>
       </div>)}
