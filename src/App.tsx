@@ -1,16 +1,16 @@
 function Film({nazwa,rok,zdjecie,ocena}:Filmy){
-  return (<div ><img src={zdjecie}></img><p>Tytuł: {nazwa}<br/>Rok: {rok}<br/>Ocena: {ocena}</p></div>
+  return (<div ><img src={zdjecie}></img><p>Tytuł: {nazwa}<br/>Rok: {rok}<br/>Ocena: {ocena}</p> {ocena>=8 && <p>POLECANY</p>}</div>
   );
 }
 function Muzyka({nazwaAlbumu,rok,nazwaZespolu,gatunek,okladka,listaUtworow}:Album){
-  return (<div ><img src={okladka}></img><p>Nazwa albumu: {nazwaAlbumu}<br/>Nazwa zespołu: {nazwaZespolu}<br/>Rok: {rok}<br/>Gatunek: {gatunek}
-  {listaUtworow.map((o) => (
-        <ListaUtworow nazwa={o.nazwa} czas={o.czas}/>))}</p>
-      </div>
+  return (<div ><img src={okladka}></img><p>Nazwa albumu: {nazwaAlbumu}<br/>Nazwa zespołu: {nazwaZespolu}<br/>Rok: {rok}<br/>Gatunek: {gatunek}</p>
+  {listaUtworow.length<=0 && <p>BEZ UTWOROW</p>}
+  <p>{listaUtworow.map((o) => (<ListaUtworow nazwa={o.nazwa} czas={o.czas}/>))}</p>
+  </div>
   );
 }
 function Ksiazki({nazwa,rok,liczbaStron,okladka}:Ksiazki){
-  return (<div><img src={okladka}></img><p>Tytuł: {nazwa}<br/>Liczba stron: {liczbaStron}<br/>Rok: {rok}</p></div>
+  return (<div><img src={okladka}></img><p>Tytuł: {nazwa}<br/>Liczba stron: {liczbaStron}<br/>Rok: {rok}</p>{rok<=2000 && <p>KLASYKA</p>}</div>
   );
 }
 function ListaUtworow({nazwa,czas}:Utwor){
@@ -28,7 +28,7 @@ function App(){
   let albumy:Album []=[];
   albumy.push({nazwaAlbumu:"Album 1", rok:2001 ,nazwaZespolu:"Zespół 1",gatunek:"Rock",okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp", listaUtworow:[{nazwa:"Nazwa 1",czas:"1:00"},{nazwa:"Nazwa 3",czas:"2:00"},{nazwa:"Nazwa 2",czas:"3:00"},{nazwa:"Nazwa 4",czas:"5:00"}]});
   albumy.push({nazwaAlbumu:"CAlbum 1", rok:2001 ,nazwaZespolu:"Zespół 2",gatunek:"Disco Polo",okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",listaUtworow:[{nazwa:"Nazwa 1",czas:"1:00"},{nazwa:"Nazwa 3",czas:"2:00"},{nazwa:"Nazwa 2",czas:"3:00"}]});
-  albumy.push({nazwaAlbumu:"BAlbum 1", rok:2001 ,nazwaZespolu:"Zespół 3",gatunek:"Hip-Hop",okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",listaUtworow:[{nazwa:"Nazwa 1",czas:"1:00"},{nazwa:"Nazwa 3",czas:"2:00"},{nazwa:"Nazwa 2",czas:"3:00"}]});
+  albumy.push({nazwaAlbumu:"BAlbum 1", rok:2001 ,nazwaZespolu:"Zespół 3",gatunek:"Hip-Hop",okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",listaUtworow:[]});
   let ksiazki:Ksiazki[]=[];
   ksiazki.push({nazwa:"BKsiązka 1", rok:2010, liczbaStron:123, okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp"})
   ksiazki.push({nazwa:"CKsiązka 2", rok:2011, liczbaStron:234, okladka:"https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp"})
