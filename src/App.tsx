@@ -3,7 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Film({ nazwa, rok, zdjecie, ocena }: Filmy) {
   return (
-    <div className="col-12 col-md-4">
+    <div className="col-12 col-md-4" onClick={(event) => {
+    console.log("wyswietlono film: "+nazwa);
+  }}>
       <div className="card text-bg-danger mb-3 ">
         <img className="card-img-top" src={zdjecie}></img>
         <div className="card-body">
@@ -11,6 +13,10 @@ function Film({ nazwa, rok, zdjecie, ocena }: Filmy) {
           <p className="card-text">
             Rok: {rok}
             <br />
+            <button onClick={(event) => {
+    console.log("wyswietlono  szczegóły filmu: "+nazwa); event.stopPropagation();
+  }}>Sprawdz szczegóły</button>
+    <br />
             Ocena: {ocena}
             <br />
           </p>
@@ -56,9 +62,11 @@ function Muzyka({
             <tbody>
               {listaUtworow.map((o) => (
                 <ListaUtworow
+              
                   nazwa={o.nazwa}
                   czas={o.czas}
                   nr={o.nr}
+                  nazwaAlbumu={nazwaAlbumu}
                 />
               ))}
             </tbody>
@@ -68,7 +76,9 @@ function Muzyka({
     </div>
   );
 }
-
+function handleSongClick( event: React.MouseEvent<HTMLTableRowElement>,nazwa:string,album:string){
+console.log("wybrano utwor: "+nazwa+ "Z albumu: "+album); 
+}
 function Ksiazki({ nazwa, rok, liczbaStron, okladka }: Ksiazki) {
   return (
     <div className="col-12 col-md-4">
@@ -89,9 +99,9 @@ function Ksiazki({ nazwa, rok, liczbaStron, okladka }: Ksiazki) {
   );
 }
 
-function ListaUtworow({ nr, nazwa, czas }: Utwor) {
+function ListaUtworow({ nr, nazwa, czas,nazwaAlbumu}: Utwor) {
   return (
-    <tr>
+    <tr onClick={(event) => handleSongClick(event, nazwa, nazwaAlbumu)}>
       <td>{nr}</td>
       <td>{nazwa}</td>
       <td className="text-end"> {czas}</td>
@@ -103,7 +113,24 @@ function App() {
   const [czyFilmOtwarty, ustawFilmOtwarty] = useState(true);
   const [czyAlbumOtwarty, ustawAlbumOtwarty] = useState(true);
   const [czyKsiazkiOtwarty, ustawKsiazkiOtwarty] = useState(true);
-
+  const[filmyTekst,zmienFTekst]=useState("");
+  function wyswietlFTekst(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value; 
+    zmienFTekst(value);
+    console.log(value);
+  }
+  const[ksiazkiTekst,zmienKTekst]=useState("");
+  function wyswietlKTekst(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value; 
+    zmienKTekst(value);
+    console.log(value);
+  }
+  const[albumyTekst,zmienATekst]=useState("");
+  function wyswietlATekst(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value; 
+    zmienATekst(value);
+    console.log(value);
+  }
   let filmy: Filmy[] = [];
   filmy.push({
     nazwa: "CZmierzch 1",
@@ -132,10 +159,10 @@ function App() {
     gatunek: "Rock",
     okladka: "https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",
     listaUtworow: [
-      { nr: 1, nazwa: "Nazwa 1", czas: "1:00" },
-      { nr: 2, nazwa: "Nazwa 3", czas: "2:00" },
-      { nr: 3, nazwa: "Nazwa 2", czas: "3:00" },
-      { nr: 4, nazwa: "Nazwa 4", czas: "5:00" },
+      { nr: 1, nazwa: "Nazwa 1", czas: "1:00" ,nazwaAlbumu: "Album 1"},
+      { nr: 2, nazwa: "Nazwa 3", czas: "2:00"  ,nazwaAlbumu: "Album 1"},
+      { nr: 3, nazwa: "Nazwa 2", czas: "3:00" ,nazwaAlbumu: "Album 1" },
+      { nr: 4, nazwa: "Nazwa 4", czas: "5:00" ,nazwaAlbumu: "Album 1" },
     ],
   });
   albumy.push({
@@ -145,9 +172,9 @@ function App() {
     gatunek: "Disco Polo",
     okladka: "https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",
     listaUtworow: [
-      { nr: 1, nazwa: "Nazwa 1", czas: "1:00" },
-      { nr: 2, nazwa: "Nazwa 3", czas: "2:00" },
-      { nr: 3, nazwa: "Nazwa 2", czas: "3:00" },
+      { nr: 1, nazwa: "Nazwa 1", czas: "1:00"  ,nazwaAlbumu:"CAlbum 1"},
+      { nr: 2, nazwa: "Nazwa 3", czas: "2:00"  ,nazwaAlbumu:"CAlbum 1"},
+      { nr: 3, nazwa: "Nazwa 2", czas: "3:00"  ,nazwaAlbumu:"CAlbum 1"},
     ],
   });
   albumy.push({
@@ -179,9 +206,9 @@ function App() {
     okladka: "https://fwcdn.pl/fpo/24/41/462441/7210352_1.10.webp",
   });
 
-  filmy.sort((a, b) => a.nazwa.localeCompare(b.nazwa));
-  albumy.sort((a, b) => a.nazwaAlbumu.localeCompare(b.nazwaAlbumu));
-  ksiazki.sort((a, b) => a.nazwa.localeCompare(b.nazwa));
+const posortowaneFilmy = [...filmy].sort((a, b) => a.nazwa.localeCompare(b.nazwa));
+const posortowaneAlbumy = [...albumy].sort((a, b) => a.nazwaAlbumu.localeCompare(b.nazwaAlbumu));
+const posortowaneKsiazki = [...ksiazki].sort((a, b) => a.nazwa.localeCompare(b.nazwa));
 
   const filmyPo2010 = filmy.filter((n) => n.rok > 2010);
 
@@ -194,7 +221,15 @@ function App() {
   );
 
   return (
-    <body className="container text-center">
+    <div className="container text-center">
+      <input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="filmy-szuk"
+  onChange={wyswietlFTekst}
+/>
+<span> {filmyTekst}</span>
       <h1 onClick={() => ustawFilmOtwarty(!czyFilmOtwarty)}>
         FILMY {czyFilmOtwarty ? <span>▾</span> : <span>▸</span>}
       </h1>
@@ -203,8 +238,9 @@ function App() {
           <h2>WSZYSTKIE</h2>
 
             <div className="row">
-            {filmy.map((o) => (
+            {posortowaneFilmy.map((o) => (
               <Film
+            
                 nazwa={o.nazwa}
                 rok={o.rok}
                 zdjecie={o.zdjecie}
@@ -219,6 +255,7 @@ function App() {
             <div className="row">
             {filmyPo2010.map((o) => (
               <Film
+             
                 nazwa={o.nazwa}
                 rok={o.rok}
                 zdjecie={o.zdjecie}
@@ -229,7 +266,14 @@ function App() {
    
       </div>
       )}
-
+<input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="albumy-szuk"
+  onChange={wyswietlATekst}
+/>
+<span>{albumyTekst}</span>
       <h1 onClick={() => ustawAlbumOtwarty(!czyAlbumOtwarty)}>
         ALBUMY{czyAlbumOtwarty ? <span>▾</span> : <span>▸</span>}
       </h1>
@@ -249,8 +293,9 @@ function App() {
         </div>
           <h2>WSZYSTKIE </h2>
             <div className="row">
-            {albumy.map((o) => (
+            {posortowaneAlbumy.map((o) => (
               <Muzyka
+          
                 nazwaAlbumu={o.nazwaAlbumu}
                 rok={o.rok}
                 okladka={o.okladka}
@@ -262,7 +307,14 @@ function App() {
         </div>
         </div>
       )}
-
+<input
+  type="text"
+  className="form-control"
+  placeholder="Wpisz tytuł"
+  id="ksiaz-szuk"
+  onChange={wyswietlKTekst}
+/>
+<span>{ksiazkiTekst}</span>
       <h1 onClick={() => ustawKsiazkiOtwarty(!czyKsiazkiOtwarty)}>
         KSIĄŻKI{czyKsiazkiOtwarty ? <span>▾</span> : <span>▸</span>}
       </h1>
@@ -271,8 +323,9 @@ function App() {
         <div>
           <h2>WSZYSTKIE </h2>
           <div className="card-group">
-            {ksiazki.map((o) => (
+            {posortowaneKsiazki.map((o) => (
               <Ksiazki
+          
                 nazwa={o.nazwa}
                 rok={o.rok}
                 okladka={o.okladka}
@@ -294,7 +347,7 @@ function App() {
           </div>
         </div>
       )}
-    </body>
+    </div>
   );
 }
 
@@ -341,6 +394,8 @@ interface Utwor {
   nazwa: string;
   /**czas wydania */
   czas: string;
+   /**czas wydania */
+  nazwaAlbumu: string;
 }
 
 export default App;
